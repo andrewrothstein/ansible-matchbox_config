@@ -1,0 +1,41 @@
+---
+- name: resolve platform specific vars
+  include_vars: '{{item}}'
+  with_first_found:
+    - files:
+        - '{{ansible_distribution}}-{{ansible_distribution_release}}.yml'
+        - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+      skip: true
+      paths:
+        - '{{role_path}}/vars'
+
+- name: create matchbox group
+  become: yes
+  become_user: root
+  group:
+    name: '{{matchbox_config_group}}'
+    state: present
+  
+- name: create matchbox user
+  become: yes
+  become_user: root
+  user:
+    name: '{{matchbox_config_user}}'
+    group: '{{matchbox_config_group}}'
+    state: present
+
+- name: create matchbox data-dir
+  become: yes
+  become_user: root
+  with_items:
+    - '{{matchbox_config_data_path}}'
+    - '{{matchbox_config_data_path}}/assets'
+  file:
+    path: '{{item}}'
+    state: directory
+    owner: '{{matchbox_config_user}}'
+    group: '{{matchbox_config_group}}'
+    mode: 0555
+    
+- include: '{{matchbox_supervisor|default("systemd")}}.yml'
