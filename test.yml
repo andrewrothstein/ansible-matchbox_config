@@ -4,3 +4,9 @@
     - role: '{{playbook_dir}}'
       matchbox_config_activate: False
       matchbox_config_pki_dir: '{{playbook_dir}}/test-pki'
+      matchbox_config_get_coreos:
+        - channel: stable
+          version: '1409.7.0'
+        - channel: alpha
+          version: '1478.0.0'
+

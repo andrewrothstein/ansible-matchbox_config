@@ -3,9 +3,16 @@
 matchbox_config_user: matchbox
 matchbox_config_group: matchbox
 
-matchbox_config_exec: /usr/local/matchbox/matchbox
+matchbox_config_bin: /usr/local/matchbox
 matchbox_config_data_path: /var/lib/matchbox
 matchbox_config_etc: /etc/matchbox
+
+#get coreos assets to host with matchbox
+#matchbox_config_get_coreos:
+#  - channel: stable
+#    version: '1409.7.0'
+#  - channel: alpha
+#    version: '1478.0.0'
 
 #matchbox_config_pki_dir: /path/to/test/pki
 

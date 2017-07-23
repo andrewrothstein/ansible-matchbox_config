@@ -30,7 +30,7 @@
   become_user: root
   with_items:
     - '{{matchbox_config_data_path}}'
-    - '{{matchbox_config_data_path}}/assets'
+    - '{{matchbox_config_assets_path}}'
     - '{{matchbox_config_etc}}'
   file:
     path: '{{item}}'
@@ -58,5 +58,15 @@
     owner: '{{matchbox_config_user}}'
     group: '{{matchbox_config_group}}'
     mode: '{{item.m}}'
+
+- name: install coreos kernel binary assets
+  become: yes
+  become_user: '{{matchbox_config_user}}'
+  with_items: '{{matchbox_config_get_coreos|default([])}}'
+  args:
+    creates: '{{matchbox_config_assets_path}}/coreos/{{item.version}}/coreos_production_pxe_image.cpio.gz'
+  command: >-
+    {{matchbox_config_get_coreos_bin}} {{item.channel}} {{item.version}} {{matchbox_config_assets_path}}
+
     
 - include: '{{matchbox_supervisor|default("systemd")}}.yml'
