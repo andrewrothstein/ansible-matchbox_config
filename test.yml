@@ -2,4 +2,5 @@
 - hosts: all
   roles:
     - role: '{{playbook_dir}}'
-#      matchbox_config_activate: False
+      matchbox_config_activate: False
+      matchbox_config_pki_dir: '{{playbook_dir}}/test-pki'

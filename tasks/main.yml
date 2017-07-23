@@ -31,11 +31,32 @@
   with_items:
     - '{{matchbox_config_data_path}}'
     - '{{matchbox_config_data_path}}/assets'
+    - '{{matchbox_config_etc}}'
   file:
     path: '{{item}}'
     state: directory
     owner: '{{matchbox_config_user}}'
     group: '{{matchbox_config_group}}'
     mode: 0555
+
+- name: install pki...
+  become: yes
+  become_user: root
+  with_items:
+    - s: '{{matchbox_config_pki_dir}}/{{inventory_hostname}}-key.pem'
+      d: '{{matchbox_config_etc}}/server.key'
+      m: '0400'
+    - s: '{{matchbox_config_pki_dir}}/{{inventory_hostname}}.pem'
+      d: '{{matchbox_config_etc}}/server.crt'
+      m: '0444'
+    - s: '{{matchbox_config_pki_dir}}/ca.pem'
+      d: '{{matchbox_config_etc}}/ca.crt'
+      m: '0444'
+  copy:
+    src: '{{item.s}}'
+    dest: '{{item.d}}'
+    owner: '{{matchbox_config_user}}'
+    group: '{{matchbox_config_group}}'
+    mode: '{{item.m}}'
     
 - include: '{{matchbox_supervisor|default("systemd")}}.yml'

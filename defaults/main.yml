@@ -5,6 +5,9 @@ matchbox_config_group: matchbox
 
 matchbox_config_exec: /usr/local/matchbox/matchbox
 matchbox_config_data_path: /var/lib/matchbox
+matchbox_config_etc: /etc/matchbox
+
+#matchbox_config_pki_dir: /path/to/test/pki
 
 matchbox_config_address:
   bind: '0.0.0.0'
