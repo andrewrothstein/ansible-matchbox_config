@@ -28,4 +28,6 @@ galaxy_info:
     - tftp
     - ignition
 
-dependencies: []
+dependencies:
+  - src: andrewrothstein.matchbox
+    version: v1.0.0
