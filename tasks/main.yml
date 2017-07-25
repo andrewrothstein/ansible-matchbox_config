@@ -37,7 +37,7 @@
     state: directory
     owner: '{{matchbox_config_user}}'
     group: '{{matchbox_config_group}}'
-    mode: 0555
+    mode: 0755
 
 - name: install pki...
   become: yes
