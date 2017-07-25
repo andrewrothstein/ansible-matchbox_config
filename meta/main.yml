@@ -31,5 +31,7 @@ galaxy_info:
 dependencies:
   - src: andrewrothstein.curl
     version: v1.0.2
+  - src: andrewrothstein.gpg
+    version: v1.0.0
   - src: andrewrothstein.matchbox
     version: v1.0.0
