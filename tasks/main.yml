@@ -69,4 +69,4 @@
     {{matchbox_config_get_coreos_bin}} {{item.channel}} {{item.version}} {{matchbox_config_assets_path}}
 
     
-- include: '{{matchbox_supervisor|default("systemd")}}.yml'
+- include_tasks: '{{matchbox_supervisor|default("systemd")}}.yml'
