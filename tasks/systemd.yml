@@ -14,7 +14,7 @@
 - name: systemctl daemon-reload
   become: yes
   become_user: root
-  when: matchbox_config_activate and matchbox_config_service_change|changed
+  when: matchbox_config_activate and matchbox_config_service_change is changed
   command: systemctl daemon-reload
 
 - name: launching matchbox...
