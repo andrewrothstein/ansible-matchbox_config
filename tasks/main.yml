@@ -1,72 +1,72 @@
 ---
 - name: resolve platform specific vars
-  include_vars: '{{item}}'
+  include_vars: '{{ item }}'
   with_first_found:
     - files:
-        - '{{ansible_distribution}}-{{ansible_distribution_release}}.yml'
-        - '{{ansible_distribution}}.yml'
-        - '{{ansible_os_family}}.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
       skip: true
       paths:
-        - '{{role_path}}/vars'
+        - '{{ role_path }}/vars'
 
 - name: create matchbox group
   become: yes
   become_user: root
   group:
-    name: '{{matchbox_config_group}}'
+    name: '{{ matchbox_config_group }}'
     state: present
-  
+
 - name: create matchbox user
   become: yes
   become_user: root
   user:
-    name: '{{matchbox_config_user}}'
-    group: '{{matchbox_config_group}}'
+    name: '{{ matchbox_config_user }}'
+    group: '{{ matchbox_config_group }}'
     state: present
 
 - name: create matchbox data-dir
   become: yes
   become_user: root
   with_items:
-    - '{{matchbox_config_data_path}}'
-    - '{{matchbox_config_assets_path}}'
-    - '{{matchbox_config_etc}}'
+    - '{{ matchbox_config_data_path }}'
+    - '{{ matchbox_config_assets_path }}'
+    - '{{ matchbox_config_etc }}'
   file:
-    path: '{{item}}'
+    path: '{{ item }}'
     state: directory
-    owner: '{{matchbox_config_user}}'
-    group: '{{matchbox_config_group}}'
+    owner: '{{ matchbox_config_user }}'
+    group: '{{ matchbox_config_group }}'
     mode: 0755
 
 - name: install pki...
   become: yes
   become_user: root
   with_items:
-    - s: '{{matchbox_config_pki_dir}}/{{inventory_hostname}}-key.pem'
-      d: '{{matchbox_config_etc}}/server.key'
+    - s: '{{ matchbox_config_pki_dir }}/{{ inventory_hostname }}-key.pem'
+      d: '{{ matchbox_config_etc }}/server.key'
       m: '0400'
-    - s: '{{matchbox_config_pki_dir}}/{{inventory_hostname}}.pem'
-      d: '{{matchbox_config_etc}}/server.crt'
+    - s: '{{ matchbox_config_pki_dir }}/{{ inventory_hostname }}.pem'
+      d: '{{ matchbox_config_etc }}/server.crt'
       m: '0444'
-    - s: '{{matchbox_config_pki_dir}}/ca.pem'
-      d: '{{matchbox_config_etc}}/ca.crt'
+    - s: '{{ matchbox_config_pki_dir }}/ca.pem'
+      d: '{{ matchbox_config_etc }}/ca.crt'
       m: '0444'
   copy:
-    src: '{{item.s}}'
-    dest: '{{item.d}}'
-    owner: '{{matchbox_config_user}}'
-    group: '{{matchbox_config_group}}'
-    mode: '{{item.m}}'
+    src: '{{ item.s }}'
+    dest: '{{ item.d }}'
+    owner: '{{ matchbox_config_user }}'
+    group: '{{ matchbox_config_group }}'
+    mode: '{{ item.m }}'
 
 - name: install coreos kernel binary assets
   become: yes
-  become_user: '{{matchbox_config_user}}'
-  with_items: '{{matchbox_config_get_coreos|default([])}}'
+  become_user: '{{ matchbox_config_user }}'
+  with_items: '{{ matchbox_config_get_coreos|default([]) }}'
   args:
-    creates: '{{matchbox_config_assets_path}}/coreos/{{item.version}}/coreos_production_pxe_image.cpio.gz'
+    creates: '{{ matchbox_config_assets_path }}/coreos/{{ item.version }}/coreos_production_pxe_image.cpio.gz'
   command: >-
-    {{matchbox_config_get_coreos_bin}} {{item.channel}} {{item.version}} {{matchbox_config_assets_path}}
+    {{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}
 
-    
-- include_tasks: '{{matchbox_supervisor|default("systemd")}}.yml'
+
+- include_tasks: '{{ matchbox_supervisor|default("systemd") }}.yml'
