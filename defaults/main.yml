@@ -7,23 +7,20 @@ matchbox_config_bin: /usr/local/matchbox
 matchbox_config_data_path: /var/lib/matchbox
 matchbox_config_etc: /etc/matchbox
 
+matchbox_config_service_name: matchbox
+matchbox_config_systemd_unit_path: /etc/systemd/system
+
 #get coreos assets to host with matchbox
 #matchbox_config_get_coreos:
 #  - channel: stable
-#    version: '1409.7.0'
-#  - channel: alpha
-#    version: '1478.0.0'
+#    version: '2303.3.0'
 
+# useful for installing a pki
 #matchbox_config_pki_dir: /path/to/test/pki
 
-matchbox_config_address:
-  bind: '0.0.0.0'
-  port: 8080
+#matchbox_config_address: 127.0.0.1:8080
+#matchbox_config_rpc_address: 127.0.0.1:8081
 
-matchbox_config_rpc_address:
-  bind: '0.0.0.0'
-  port: 8081
-
-matchbox_config_log_level: debug
+#matchbox_config_log_level: info
 
 matchbox_config_activate: True

@@ -2,27 +2,17 @@
 - name: install service
   become: yes
   become_user: root
-  register: matchbox_config_service_change
-  with_items:
-    - f: matchbox.service
-      d: /etc/systemd/system
+  notify: matchbox_config_service_changed
   template:
-    src: '{{ item.f }}.j2'
-    dest: '{{ item.d }}/{{ item.f }}'
+    src: matchbox.service.j2
+    dest: '{{ matchbox_config_systemd_unit_path }}/{{ matchbox_config_systemd_unit }}'
     mode: 0644
 
-- name: systemctl daemon-reload
-  become: yes
-  become_user: root
-  when: matchbox_config_activate and matchbox_config_service_change is changed
-  systemd:
-    daemon_reload: yes
-
 - name: launching matchbox...
-  when: matchbox_config_activate
+  when: matchbox_config_activate | bool
   become: yes
   become_user: root
   service:
-    name: matchbox
+    name: '{{ matchbox_config_service_name }}'
     enabled: yes
     state: started

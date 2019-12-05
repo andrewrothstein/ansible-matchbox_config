@@ -42,31 +42,38 @@
 - name: install pki...
   become: yes
   become_user: root
+  when: matchbox_config_pki_dir is defined
   with_items:
-    - s: '{{ matchbox_config_pki_dir }}/{{ inventory_hostname }}-key.pem'
-      d: '{{ matchbox_config_etc }}/server.key'
-      m: '0400'
-    - s: '{{ matchbox_config_pki_dir }}/{{ inventory_hostname }}.pem'
-      d: '{{ matchbox_config_etc }}/server.crt'
-      m: '0444'
-    - s: '{{ matchbox_config_pki_dir }}/ca.pem'
-      d: '{{ matchbox_config_etc }}/ca.crt'
-      m: '0444'
+    - s: '{{ inventory_hostname }}-key.pem'
+      d: server.key
+    - s: '{{ inventory_hostname }}.pem'
+      d: server.crt
+    - s: ca.pem
+      d: ca.crt
   copy:
-    src: '{{ item.s }}'
-    dest: '{{ item.d }}'
+    src: '{{ matchbox_config_pki_dir }}/{{ item.s }}'
+    dest: '{{ matchbox_config_etc }}/{{ item.d }}'
     owner: '{{ matchbox_config_user }}'
     group: '{{ matchbox_config_group }}'
-    mode: '{{ item.m }}'
+    mode: '{{ item.m | default("0400") }}'
+
+- name: configure matchbox environment
+  become: yes
+  become_user: root
+  template:
+    src: matchbox.env.j2
+    dest: '{{ matchbox_config_env_file }}'
+    owner: '{{ matchbox_config_user }}'
+    group: '{{ matchbox_config_group }}'
+    mode: '0400'
 
 - name: install coreos kernel binary assets
   become: yes
   become_user: '{{ matchbox_config_user }}'
-  with_items: '{{ matchbox_config_get_coreos|default([]) }}'
+  with_items: '{{ matchbox_config_get_coreos | default([]) }}'
+  command: '{{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
   args:
     creates: '{{ matchbox_config_assets_path }}/coreos/{{ item.version }}/coreos_production_pxe_image.cpio.gz'
-  command: >-
-    {{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}
 
 
-- include_tasks: '{{ matchbox_supervisor|default("systemd") }}.yml'
+- include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
