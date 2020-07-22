@@ -5,7 +5,7 @@ Documentation=https://github.com/coreos/matchbox
 [Service]
 User={{ matchbox_config_user }}
 Group={{ matchbox_config_group }}
-EnvFile={{ matchbox_config_env_file }}
+EnvironmentFile={{ matchbox_config_env_file }}
 ExecStart={{ matchbox_config_exec }}
 
 ProtectHome=yes
