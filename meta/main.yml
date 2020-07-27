@@ -7,19 +7,26 @@ galaxy_info:
     - MIT
   min_ansible_version: 2.0
   platforms:
-    - name: EL
-      versions:
-        - 7
-    - name: Fedora
+    - name: Archlinux
       versions:
         - all
-    - name: Ubuntu
-      versions:
-        - xenial
     - name: Debian
       versions:
         - jessie
         - stretch
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - 31
+        - 32
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - xenial
   galaxy_tags:
     - development
     - coreos
@@ -30,9 +37,9 @@ galaxy_info:
     - ignition
 
 dependencies:
-  - src: andrewrothstein.curl
+  - role: andrewrothstein.curl
+    version: v1.0.8
+  - role: andrewrothstein.gpg
     version: v1.0.7
-  - src: andrewrothstein.gpg
-    version: v1.0.7
-  - src: andrewrothstein.matchbox
-    version: v2.0.0
+  - role: andrewrothstein.matchbox
+    version: v2.0.1
