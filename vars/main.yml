@@ -1,7 +1,9 @@
 ---
 # vars file for matchbox-config
 matchbox_config_exec: '{{ matchbox_config_bin }}/matchbox'
-matchbox_config_get_coreos_bin: '{{ matchbox_config_bin }}/scripts/get-coreos'
 matchbox_config_assets_path: '{{ matchbox_config_data_path }}/assets'
 matchbox_config_systemd_unit: '{{ matchbox_config_service_name }}.service'
 matchbox_config_env_file: '{{ matchbox_config_etc }}/matchbox.env'
+
+matchbox_config_get_coreos_bin: '{{ matchbox_config_bin }}/scripts/get-coreos'
+matchbox_config_get_flatcar_bin: '{{ matchbox_config_bin }}/scripts/get-flatcar'

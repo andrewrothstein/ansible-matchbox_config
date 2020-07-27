@@ -75,5 +75,12 @@
   args:
     creates: '{{ matchbox_config_assets_path }}/coreos/{{ item.version }}/coreos_production_pxe_image.cpio.gz'
 
+- name: install flatcar kernel binary assets
+  become: yes
+  become_user: '{{ matchbox_config_user }}'
+  with_items: '{{ matchbox_config_get_flatcar | default([]) }}'
+  command: '{{ matchbox_config_get_flatcar_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
+  args:
+    creates: '{{ matchbox_config_assets_path }}/flatcar/{{ item.version }}/flatcar_production_pxe_image.cpio.gz'
 
 - include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'

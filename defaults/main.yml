@@ -10,10 +10,15 @@ matchbox_config_etc: /etc/matchbox
 matchbox_config_service_name: matchbox
 matchbox_config_systemd_unit_path: /etc/systemd/system
 
-#get coreos assets to host with matchbox
+##get coreos assets to host with matchbox
 #matchbox_config_get_coreos:
 #  - channel: stable
 #    version: '2303.3.0'
+
+##get flatcar assets to host with matchbox
+#matchbox_config_get_flatcar:
+#  - channel: stable
+#    version: '2512.2.1'
 
 # useful for installing a pki
 #matchbox_config_pki_dir: /path/to/test/pki
