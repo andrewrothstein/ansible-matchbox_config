@@ -8,4 +8,4 @@
       matchbox_config_rpc_address: 0.0.0.0:8081
       matchbox_config_get_coreos:
         - channel: stable
-          version: '2303.3.0'
+          version: '2512.3.0'
