@@ -3,12 +3,14 @@
   roles:
     - role: '{{ playbook_dir }}'
       matchbox_config_activate: False
-      matchbox_config_pki_dir: '{{ playbook_dir }}/test-pki'
+      matchbox_config_tls:
+        enabled: true
+        pki_dir: '{{ playbook_dir }}/test-pki'
       matchbox_config_address: 0.0.0.0:8080
       matchbox_config_rpc_address: 0.0.0.0:8081
       matchbox_config_get_coreos:
         - channel: stable
-          version: '2512.3.0'
-#      matchbox_config_get_flatcar:
-#        - channel: stable
-#          version: '2512.2.1'
+          version: '32.20201004.3.0'
+      matchbox_config_get_flatcar:
+        - channel: stable
+          version: '2605.6.0'

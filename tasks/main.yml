@@ -39,23 +39,22 @@
     group: '{{ matchbox_config_group }}'
     mode: 0755
 
-- name: install pki...
-  become: yes
-  become_user: root
-  when: matchbox_config_pki_dir is defined
-  with_items:
-    - s: '{{ inventory_hostname }}-key.pem'
-      d: server.key
-    - s: '{{ inventory_hostname }}.pem'
-      d: server.crt
-    - s: ca.pem
-      d: ca.crt
-  copy:
-    src: '{{ matchbox_config_pki_dir }}/{{ item.s }}'
-    dest: '{{ matchbox_config_etc }}/{{ item.d }}'
-    owner: '{{ matchbox_config_user }}'
-    group: '{{ matchbox_config_group }}'
-    mode: '{{ item.m | default("0400") }}'
+- name: install keys/certs
+  when: matchbox_config_tls.enabled
+  include_role:
+    name: andrewrothstein.tls
+  vars:
+    tls_become: yes
+    tls_become_user: root
+    tls_src: '{{ matchbox_config_tls.pki_dir }}'
+    tls_dest: '{{ matchbox_config_etc }}'
+    tls_dest_file_names:
+      ca: ca.crt
+      cert: server.crt
+      key: server.key
+    tls_dest_chmod:
+      owner: root
+      grp: root
 
 - name: configure matchbox environment
   become: yes

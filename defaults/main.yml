@@ -21,7 +21,12 @@ matchbox_config_systemd_unit_path: /etc/systemd/system
 #    version: '2512.2.1'
 
 # useful for installing a pki
-#matchbox_config_pki_dir: /path/to/test/pki
+matchbox_config_tls:
+  enable: false
+
+#matchbox_config_tls:
+#  enable: true
+#  pki_dir: ~/secrets
 
 #matchbox_config_address: 127.0.0.1:8080
 #matchbox_config_rpc_address: 127.0.0.1:8081
