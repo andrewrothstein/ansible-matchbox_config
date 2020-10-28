@@ -66,13 +66,13 @@
     group: '{{ matchbox_config_group }}'
     mode: '0400'
 
-- name: install coreos kernel binary assets
+- name: install fedora coreos kernel binary assets
   become: yes
   become_user: '{{ matchbox_config_user }}'
   with_items: '{{ matchbox_config_get_coreos | default([]) }}'
   command: '{{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
   args:
-    creates: '{{ matchbox_config_assets_path }}/coreos/{{ item.version }}/coreos_production_pxe_image.cpio.gz'
+    creates: '{{ matchbox_config_assets_path }}/fedora-coreos/fedora-coreos-{{ item.version }}-metal.x86_64.raw.xz'
 
 - name: install flatcar kernel binary assets
   become: yes
