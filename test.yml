@@ -4,7 +4,7 @@
     - role: '{{ playbook_dir }}'
       matchbox_config_activate: False
       matchbox_config_tls:
-        enabled: true
+        enable: true
         pki_dir: '{{ playbook_dir }}/test-pki'
       matchbox_config_address: 0.0.0.0:8080
       matchbox_config_rpc_address: 0.0.0.0:8081

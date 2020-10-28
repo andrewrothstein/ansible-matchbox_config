@@ -40,7 +40,7 @@
     mode: 0755
 
 - name: install keys/certs
-  when: matchbox_config_tls.enabled
+  when: matchbox_config_tls.enable
   include_role:
     name: andrewrothstein.tls
   vars:
