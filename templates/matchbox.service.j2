@@ -1,6 +1,8 @@
 [Unit]
 Description=matchbox boot service
 Documentation=https://github.com/coreos/matchbox
+Requires=network-online.target
+After=network-online.target
 
 [Service]
 User={{ matchbox_config_user }}
