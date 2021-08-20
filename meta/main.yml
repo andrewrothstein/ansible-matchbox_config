@@ -9,21 +9,18 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
+        - bullseye
         - buster
-        - stretch
     - name: EL
       versions:
-        - 7
         - 8
     - name: Fedora
       versions:
-        - 31
-        - 32
+        - 34
     - name: Ubuntu
       versions:
         - bionic
         - focal
-        - xenial
   galaxy_tags:
     - development
     - coreos
@@ -34,11 +31,15 @@ galaxy_info:
     - ignition
 
 dependencies:
+  - role: andrewrothstein.sudoers
+    version: v1.0.13
   - role: andrewrothstein.curl
-    version: v1.0.9
+    version: v1.0.10
   - role: andrewrothstein.gpg
-    version: v1.0.7
+    version: v1.0.8
   - role: andrewrothstein.matchbox
-    version: v2.0.3
-  - role: andrewrothstein.tls
+    version: v2.0.4
+  - role: andrewrothstein.systemd_service
+    version: v3.0.4
+  - role: andrewrothstein.service_account
     version: v0.0.2

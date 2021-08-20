@@ -10,61 +10,27 @@
       paths:
         - '{{ role_path }}/vars'
 
-- name: create matchbox group
-  become: yes
-  become_user: root
-  group:
-    name: '{{ matchbox_config_group }}'
-    state: present
-
-- name: create matchbox user
-  become: yes
-  become_user: root
-  user:
-    name: '{{ matchbox_config_user }}'
-    group: '{{ matchbox_config_group }}'
-    state: present
-
-- name: create matchbox data-dir
-  become: yes
-  become_user: root
-  with_items:
-    - '{{ matchbox_config_data_path }}'
-    - '{{ matchbox_config_assets_path }}'
-    - '{{ matchbox_config_etc }}'
-  file:
-    path: '{{ item }}'
-    state: directory
-    owner: '{{ matchbox_config_user }}'
-    group: '{{ matchbox_config_group }}'
-    mode: 0755
-
-- name: install keys/certs
-  when: matchbox_config_tls.enable
+- name: create matchbox service account
   include_role:
-    name: andrewrothstein.tls
+    name: andrewrothstein.service_account
   vars:
-    tls_become: yes
-    tls_become_user: root
-    tls_src: '{{ matchbox_config_tls.pki_dir }}'
-    tls_dest: '{{ matchbox_config_etc }}'
+    service_account:
+      user:
+        name: '{{ matchbox_config_user | default("matchbox") }}'
+        group: '{{ matchbox_config_group | default("matchbox") }}'
+      directories:
+        - d: '{{ matchbox_config_data_path }}'
+        - d: '{{ matchbox_config_assets_path }}'
+        - d: '{{ matchbox_config_etc }}'
+      tls:
+        pki_dir: '{{ matchbox_config_tls.pki_dir }}'
+        dest_dir: '{{ matchbox_config_etc }}'
     tls_dest_file_names:
       ca: ca.crt
       cert: server.crt
       key: server.key
-    tls_dest_chmod:
-      owner: root
-      grp: root
 
-- name: configure matchbox environment
-  become: yes
-  become_user: root
-  template:
-    src: matchbox.env.j2
-    dest: '{{ matchbox_config_env_file }}'
-    owner: '{{ matchbox_config_user }}'
-    group: '{{ matchbox_config_group }}'
-    mode: '0400'
+- include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
 
 - name: install fedora coreos kernel binary assets
   become: yes
@@ -82,4 +48,3 @@
   args:
     creates: '{{ matchbox_config_assets_path }}/flatcar/{{ item.version }}/flatcar_production_pxe_image.cpio.gz'
 
-- include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'

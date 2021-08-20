@@ -1,18 +1,37 @@
 ---
-- name: install service
-  become: yes
-  become_user: root
-  notify: matchbox_config_service_changed
-  template:
-    src: matchbox.service.j2
-    dest: '{{ matchbox_config_systemd_unit_path }}/{{ matchbox_config_systemd_unit }}'
-    mode: 0644
-
-- name: launching matchbox...
-  when: matchbox_config_activate | bool
-  become: yes
-  become_user: root
-  service:
-    name: '{{ matchbox_config_service_name }}'
-    enabled: yes
-    state: started
+- include_role:
+    name: andrewrothstein.systemd_service
+  vars:
+    systemd_service_activate: '{{ matchbox_config_activate }}'
+    systemd_service_def:
+      name: '{{ machbox_config_name | default("matchbox") }}'
+      user: '{{ matchbox_config_user | default("matchbox") }}'
+      group: '{{ matchbox_config_group | default("matchbox") }}'
+      description: matchbox service
+      exe: /usr/local/bin/matchbox
+      env:
+        dir: /etc/matchbox
+        filename: env
+        data:
+          MATCHBOX_ADDRESS: '{{ matchbox_config_address | default("localhost:1234") }}'
+          MATCHBOX_LOG_LEVEL: '{{ matchbox_config_log_level | default("") }}'
+          MATCHBOX_DATA_PATH: '{{ matchbox_config_data_path | default("") }}'
+          MATCHBOX_ASSETS_PATH: '{{ matchbox_config_assets_path | default("") }}'
+          MATCHBOX_RPC_ADDRESS: '{{ matchbox_config_rpc_address | default("") }}'
+          MATCHBOX_CERT_FILE: '{% if matchbox_config_cert_file is defined %}{{ matchbox_config_cert_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/server.crt{% else %}{% endif %}'
+          MATCHBOX_KEY_FILE: '{% if matchbox_config_key_file is defined %}{{ matchbox_config_key_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/server.key{% else %}{% endif %}'
+          MATCHBOX_CA_FILE: '{% if matchbox_config_ca_file is defined %}{{ matchbox_config_ca_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/ca.crt{% else %}{% endif %}'
+          MATCHBOX_KEY_RING_FILE: '{% if matchbox_config_key_ring_path is defined %}{{ matchbox_config_key_ring_path }}{% else %}{% endif %}'
+          MATCHBOX_PASSPHRASE: '{% if matchbox_config_passphrase is defined %}{{ matchbox_config_passphrase }}{% else %}{% endif %}'
+      protect_home: yes
+      protect_system: full
+      restart:
+        policy: always
+        sec: 5
+      timeout:
+        start_sec: 10
+        stop_sec: 10
+      after:
+        - network-online.target
+      wanted_by:
+        - multi-user.target
