@@ -16,7 +16,8 @@ galaxy_info:
         - 8
     - name: Fedora
       versions:
-        - 34
+        - 35
+        - 36
     - name: Ubuntu
       versions:
         - bionic
@@ -29,17 +30,12 @@ galaxy_info:
     - ipxe
     - tftp
     - ignition
+  role_name: matchbox-config
 
 dependencies:
-  - role: andrewrothstein.sudoers
-    version: v1.0.13
-  - role: andrewrothstein.curl
-    version: v1.0.10
-  - role: andrewrothstein.gpg
-    version: v1.0.8
-  - role: andrewrothstein.matchbox
-    version: v2.0.4
-  - role: andrewrothstein.systemd_service
-    version: v3.0.4
-  - role: andrewrothstein.service_account
-    version: v0.0.2
+  - andrewrothstein.sudoers
+  - andrewrothstein.curl
+  - andrewrothstein.gpg
+  - andrewrothstein.matchbox
+  - andrewrothstein.systemd_service
+  - andrewrothstein.service_account
