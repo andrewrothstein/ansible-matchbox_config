@@ -33,4 +33,4 @@ matchbox_config_tls:
 
 #matchbox_config_log_level: info
 
-matchbox_config_activate: True
+matchbox_config_activate: true

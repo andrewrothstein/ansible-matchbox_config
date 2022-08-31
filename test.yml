@@ -2,7 +2,7 @@
 - hosts: all
   roles:
     - role: '{{ playbook_dir }}'
-      matchbox_config_activate: False
+      matchbox_config_activate: false
       matchbox_config_tls:
         enable: true
         pki_dir: '{{ playbook_dir }}/test-pki'
@@ -10,7 +10,7 @@
       matchbox_config_rpc_address: 0.0.0.0:8081
       matchbox_config_get_coreos:
         - channel: stable
-          version: '32.20201004.3.0'
+          version: '36.20220806.3.0'
       matchbox_config_get_flatcar:
         - channel: stable
-          version: '2605.6.0'
+          version: '3227.2.1'

@@ -23,7 +23,7 @@
           MATCHBOX_CA_FILE: '{% if matchbox_config_ca_file is defined %}{{ matchbox_config_ca_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/ca.crt{% else %}{% endif %}'
           MATCHBOX_KEY_RING_FILE: '{% if matchbox_config_key_ring_path is defined %}{{ matchbox_config_key_ring_path }}{% else %}{% endif %}'
           MATCHBOX_PASSPHRASE: '{% if matchbox_config_passphrase is defined %}{{ matchbox_config_passphrase }}{% else %}{% endif %}'
-      protect_home: yes
+      protect_home: true
       protect_system: full
       restart:
         policy: always

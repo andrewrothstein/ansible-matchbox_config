@@ -33,7 +33,7 @@
 - include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
 
 - name: install fedora coreos kernel binary assets
-  become: yes
+  become: true
   become_user: '{{ matchbox_config_user }}'
   with_items: '{{ matchbox_config_get_coreos | default([]) }}'
   command: '{{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
@@ -41,10 +41,9 @@
     creates: '{{ matchbox_config_assets_path }}/fedora-coreos/fedora-coreos-{{ item.version }}-metal.x86_64.raw.xz'
 
 - name: install flatcar kernel binary assets
-  become: yes
+  become: true
   become_user: '{{ matchbox_config_user }}'
   with_items: '{{ matchbox_config_get_flatcar | default([]) }}'
   command: '{{ matchbox_config_get_flatcar_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
   args:
     creates: '{{ matchbox_config_assets_path }}/flatcar/{{ item.version }}/flatcar_production_pxe_image.cpio.gz'
-
