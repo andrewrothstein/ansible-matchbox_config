@@ -1,13 +1,13 @@
 ---
 - name: andrewrothstein.sudoers
-  version: v1.0.14
+  version: v1.0.15
 - name: andrewrothstein.curl
   version: v1.0.15
 - name: andrewrothstein.gpg
   version: v1.0.12
 - name: andrewrothstein.matchbox
-  version: v2.0.6
+  version: v2.1.0
 - name: andrewrothstein.systemd_service
-  version: v3.0.5
+  version: v3.0.7
 - name: andrewrothstein.service_account
-  version: v0.0.2
+  version: v0.1.0

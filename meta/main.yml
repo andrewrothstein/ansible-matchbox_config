@@ -33,11 +33,3 @@ galaxy_info:
     - tftp
     - ignition
   role_name: matchbox-config
-
-dependencies:
-  - andrewrothstein.sudoers
-  - andrewrothstein.curl
-  - andrewrothstein.gpg
-  - andrewrothstein.matchbox
-  - andrewrothstein.systemd_service
-  - andrewrothstein.service_account

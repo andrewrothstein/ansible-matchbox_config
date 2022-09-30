@@ -1,4 +1,13 @@
 ---
+- include_role:
+    name: andrewrothstein.sudoers
+- include_role:
+    name: andrewrothstein.curl
+- include_role:
+    name: andrewrothstein.gpg
+- include_role:
+    name: andrewrothstein.matchbox
+
 - name: resolve platform specific vars
   include_vars: '{{ item }}'
   with_first_found:
