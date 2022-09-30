@@ -11,6 +11,6 @@
       matchbox_config_get_coreos:
         - channel: stable
           version: '36.20220806.3.0'
-      matchbox_config_get_flatcar:
-        - channel: stable
-          version: '3227.2.1'
+#      matchbox_config_get_flatcar:
+#        - channel: stable
+#          version: '3227.2.1'
