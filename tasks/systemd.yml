@@ -8,7 +8,8 @@
       user: '{{ matchbox_config_user | default("matchbox") }}'
       group: '{{ matchbox_config_group | default("matchbox") }}'
       description: matchbox service
-      exe: /usr/local/bin/matchbox
+      start:
+        exe: /usr/local/bin/matchbox
       env:
         dir: /etc/matchbox
         filename: env

@@ -10,7 +10,7 @@
       matchbox_config_rpc_address: 0.0.0.0:8081
       matchbox_config_get_coreos:
         - channel: stable
-          version: '36.20220806.3.0'
-#      matchbox_config_get_flatcar:
-#        - channel: stable
-#          version: '3227.2.1'
+          version: '38.20230414.3.0'
+      matchbox_config_get_flatcar:
+        - channel: stable
+          version: '3510.2.1'
