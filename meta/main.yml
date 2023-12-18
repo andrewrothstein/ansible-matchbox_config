@@ -3,22 +3,21 @@ galaxy_info:
   author: Andrew Rothstein
   description: installs matchbox config
   company: PointState Capital
-  license:
-    - MIT
-  min_ansible_version: 2.0
+  license: MIT
+  min_ansible_version: '2.0'
   platforms:
     - name: Debian
       versions:
+        - bookworm
         - bullseye
-        - buster
     - name: EL
       versions:
         - 8
         - 9
     - name: Fedora
       versions:
-        - 36
-        - 37
+        - 38
+        - 39
     - name: Ubuntu
       versions:
         - focal
@@ -31,4 +30,4 @@ galaxy_info:
     - ipxe
     - tftp
     - ignition
-  role_name: matchbox-config
+  role_name: matchbox_config

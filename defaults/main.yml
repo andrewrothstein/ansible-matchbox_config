@@ -1,5 +1,5 @@
 ---
-# defaults file for matchbox-config
+# defaults file for matchbox_config
 matchbox_config_user: matchbox
 matchbox_config_group: matchbox
 
@@ -10,27 +10,27 @@ matchbox_config_etc: /etc/matchbox
 matchbox_config_service_name: matchbox
 matchbox_config_systemd_unit_path: /etc/systemd/system
 
-##get coreos assets to host with matchbox
-#matchbox_config_get_coreos:
-#  - channel: stable
-#    version: '2303.3.0'
+# get coreos assets to host with matchbox
+# matchbox_config_get_coreos:
+#   - channel: stable
+#     version: '2303.3.0'
 
-##get flatcar assets to host with matchbox
-#matchbox_config_get_flatcar:
-#  - channel: stable
-#    version: '2512.2.1'
+# get flatcar assets to host with matchbox
+# matchbox_config_get_flatcar:
+#   - channel: stable
+#     version: '2512.2.1'
 
 # useful for installing a pki
 matchbox_config_tls:
   enable: false
 
-#matchbox_config_tls:
-#  enable: true
-#  pki_dir: ~/secrets
+# matchbox_config_tls:
+#   enable: true
+#   pki_dir: ~/secrets
 
-#matchbox_config_address: 127.0.0.1:8080
-#matchbox_config_rpc_address: 127.0.0.1:8081
+# matchbox_config_address: 127.0.0.1:8080
+# matchbox_config_rpc_address: 127.0.0.1:8081
 
-#matchbox_config_log_level: info
+# matchbox_config_log_level: info
 
 matchbox_config_activate: true

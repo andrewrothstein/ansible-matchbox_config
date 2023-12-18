@@ -1,6 +1,6 @@
-andrewrothstein.matchbox-config
+andrewrothstein.matchbox_config
 =========
-![Build Status](https://github.com/andrewrothstein/ansible-matchbox-config/actions/workflows/build.yml/badge.svg)
+![Build Status](https://github.com/andrewrothstein/ansible-matchbox_config/actions/workflows/build.yml/badge.svg)
 
 - Installs into a matchbox user+group+home dir
 - Schedules matchbox with systemd
@@ -31,7 +31,7 @@ Example Playbook
 ```yml
 - hosts: servers
   roles:
-    - andrewrothstein.matchbox-config
+    - andrewrothstein.matchbox_config
 ```
 
 License
