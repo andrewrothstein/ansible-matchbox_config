@@ -1,5 +1,6 @@
 ---
-- include_role:
+- name: Installing systemd service
+  ansible.builtin.include_role:
     name: andrewrothstein.systemd_service
   vars:
     systemd_service_activate: '{{ matchbox_config_activate }}'
@@ -19,11 +20,37 @@
           MATCHBOX_DATA_PATH: '{{ matchbox_config_data_path | default("") }}'
           MATCHBOX_ASSETS_PATH: '{{ matchbox_config_assets_path | default("") }}'
           MATCHBOX_RPC_ADDRESS: '{{ matchbox_config_rpc_address | default("") }}'
-          MATCHBOX_CERT_FILE: '{% if matchbox_config_cert_file is defined %}{{ matchbox_config_cert_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/server.crt{% else %}{% endif %}'
-          MATCHBOX_KEY_FILE: '{% if matchbox_config_key_file is defined %}{{ matchbox_config_key_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/server.key{% else %}{% endif %}'
-          MATCHBOX_CA_FILE: '{% if matchbox_config_ca_file is defined %}{{ matchbox_config_ca_file }}{% elif matchbox_config_pki_dir is defined %}{{ matchbox_config_etc }}/ca.crt{% else %}{% endif %}'
-          MATCHBOX_KEY_RING_FILE: '{% if matchbox_config_key_ring_path is defined %}{{ matchbox_config_key_ring_path }}{% else %}{% endif %}'
-          MATCHBOX_PASSPHRASE: '{% if matchbox_config_passphrase is defined %}{{ matchbox_config_passphrase }}{% else %}{% endif %}'
+          MATCHBOX_CERT_FILE: |-
+            {%- if matchbox_config_cert_file is defined -%}
+            {{- matchbox_config_cert_file -}}
+            {%- elif matchbox_config_pki_dir is defined -%}
+            {{- matchbox_config_etc }}/server.crt
+            {%- else -%}
+            {%- endif -%}
+          MATCHBOX_KEY_FILE: |-
+            {%- if matchbox_config_key_file is defined -%}
+            {{- matchbox_config_key_file -}}
+            {%- elif matchbox_config_pki_dir is defined -%}
+            {{- matchbox_config_etc }}/server.key
+            {%- else -%}
+            {%- endif -%}
+          MATCHBOX_CA_FILE: |-
+            {%- if matchbox_config_ca_file is defined -%}
+            {{- matchbox_config_ca_file -}}
+            {%- elif matchbox_config_pki_dir is defined -%}
+            {{- matchbox_config_etc }}/ca.crt
+            {%- else -%}
+            {%- endif -%}
+          MATCHBOX_KEY_RING_FILE: |-
+            {%- if matchbox_config_key_ring_path is defined -%}
+            {{- matchbox_config_key_ring_path -}}
+            {%- else -%}
+            {%- endif -%}
+          MATCHBOX_PASSPHRASE: |-
+            {%- if matchbox_config_passphrase is defined -%}
+            {{- matchbox_config_passphrase -}}
+            {%- else -%}
+            {%- endif -%}
       protect_home: true
       protect_system: full
       restart:

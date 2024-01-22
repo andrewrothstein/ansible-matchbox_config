@@ -1,15 +1,19 @@
 ---
-- include_role:
+- name: Install andrewrothstein.sudoers
+  ansible.buildint.include_role:
     name: andrewrothstein.sudoers
-- include_role:
+- name: Install andrewrothstein.curl
+  ansible.builtin.include_role:
     name: andrewrothstein.curl
-- include_role:
+- name: Install andrewrothstein.gpg
+  ansible.builtin.include_role:
     name: andrewrothstein.gpg
-- include_role:
+- name: Install andrewrothstein.matchbox
+  ansible.builtin.include_role:
     name: andrewrothstein.matchbox
 
-- name: resolve platform specific vars
-  include_vars: '{{ item }}'
+- name: Resolve platform specific vars
+  ansible.builtin.include_vars: '{{ item }}'
   with_first_found:
     - files:
         - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
@@ -19,8 +23,8 @@
       paths:
         - '{{ role_path }}/vars'
 
-- name: create matchbox service account
-  include_role:
+- name: Create matchbox service account
+  ansible.builtin.include_role:
     name: andrewrothstein.service_account
   vars:
     service_account:
@@ -39,20 +43,29 @@
       cert: server.crt
       key: server.key
 
-- include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
+- name: Configuring for {{ matchbox_supervisor | default("systemd") }}
+  ansible.builtin.include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
 
-- name: install fedora coreos kernel binary assets
+- name: Install fedora coreos kernel binary assets
   become: true
   become_user: '{{ matchbox_config_user }}'
   with_items: '{{ matchbox_config_get_coreos | default([]) }}'
-  command: '{{ matchbox_config_get_coreos_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
+  ansible.builtin.command: >-
+    {{ matchbox_config_get_coreos_bin }}
+    {{ item.channel }}
+    {{ item.version }}
+    {{ matchbox_config_assets_path -}}
   args:
     creates: '{{ matchbox_config_assets_path }}/fedora-coreos/fedora-coreos-{{ item.version }}-metal.x86_64.raw.xz'
 
-- name: install flatcar kernel binary assets
+- name: Install flatcar kernel binary assets
   become: true
   become_user: '{{ matchbox_config_user }}'
   with_items: '{{ matchbox_config_get_flatcar | default([]) }}'
-  command: '{{ matchbox_config_get_flatcar_bin }} {{ item.channel }} {{ item.version }} {{ matchbox_config_assets_path }}'
+  ansible.builtin.command: >-
+    {{ matchbox_config_get_flatcar_bin }}
+    {{ item.channel }}
+    {{ item.version }}
+    {{ matchbox_config_assets_path -}}
   args:
     creates: '{{ matchbox_config_assets_path }}/flatcar/{{ item.version }}/flatcar_production_pxe_image.cpio.gz'

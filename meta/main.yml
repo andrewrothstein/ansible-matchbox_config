@@ -1,27 +1,8 @@
 ---
 galaxy_info:
   author: Andrew Rothstein
-  description: installs matchbox config
   company: PointState Capital
-  license: MIT
-  min_ansible_version: '2.0'
-  platforms:
-    - name: Debian
-      versions:
-        - bookworm
-        - bullseye
-    - name: EL
-      versions:
-        - 8
-        - 9
-    - name: Fedora
-      versions:
-        - 38
-        - 39
-    - name: Ubuntu
-      versions:
-        - focal
-        - jammy
+  description: installs matchbox config
   galaxy_tags:
     - development
     - coreos
@@ -30,4 +11,24 @@ galaxy_info:
     - ipxe
     - tftp
     - ignition
+  license: MIT
+  min_ansible_version: '2.0'
+  namespace: andrewrothstein
+  platforms:
+    - name: Debian
+      versions:
+        - bookworm
+        - bullseye
+    - name: EL
+      versions:
+        - '8'
+        - '9'
+    - name: Fedora
+      versions:
+        - '38'
+        - '39'
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
   role_name: matchbox_config
