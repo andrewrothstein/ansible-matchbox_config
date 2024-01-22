@@ -1,6 +1,6 @@
 ---
 - name: Install andrewrothstein.sudoers
-  ansible.buildint.include_role:
+  ansible.builtin.include_role:
     name: andrewrothstein.sudoers
 - name: Install andrewrothstein.curl
   ansible.builtin.include_role:
