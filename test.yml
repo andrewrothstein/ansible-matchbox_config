@@ -1,16 +1,18 @@
 ---
-- hosts: all
+- name: Testing andrewrothstein.matchbox_config
+  hosts: all
+  vars:
+    matchbox_config_activate: false
+    matchbox_config_tls:
+      enable: true
+      pki_dir: '{{ playbook_dir }}/test-pki'
+    matchbox_config_address: 0.0.0.0:8080
+    matchbox_config_rpc_address: 0.0.0.0:8081
+    matchbox_config_get_coreos:
+      - channel: stable
+        version: '39.20240104.3.0'
+    matchbox_config_get_flatcar:
+      - channel: stable
+        version: '3760.2.0'
   roles:
     - role: '{{ playbook_dir }}'
-      matchbox_config_activate: false
-      matchbox_config_tls:
-        enable: true
-        pki_dir: '{{ playbook_dir }}/test-pki'
-      matchbox_config_address: 0.0.0.0:8080
-      matchbox_config_rpc_address: 0.0.0.0:8081
-      matchbox_config_get_coreos:
-        - channel: stable
-          version: '39.20231119.3.0'
-      matchbox_config_get_flatcar:
-        - channel: stable
-          version: '3602.2.3'
