@@ -27,7 +27,7 @@
   ansible.builtin.include_role:
     name: andrewrothstein.service_account
   vars:
-    service_account:
+    service_account_def:
       user:
         name: '{{ matchbox_config_user | default("matchbox") }}'
         group: '{{ matchbox_config_group | default("matchbox") }}'
@@ -38,10 +38,6 @@
       tls:
         pki_dir: '{{ matchbox_config_tls.pki_dir }}'
         dest_dir: '{{ matchbox_config_etc }}'
-    tls_dest_file_names:
-      ca: ca.crt
-      cert: server.crt
-      key: server.key
 
 - name: Configuring for {{ matchbox_supervisor | default("systemd") }}
   ansible.builtin.include_tasks: '{{ matchbox_supervisor | default("systemd") }}.yml'
